@@ -22,4 +22,11 @@ app.get("*", (req, res) => {
     res.sendFile(path.join(distPath, "index.html"));
   });
 
+  // add at bottom of server/node-build.ts
+if (process.env.STANDALONE === "true") {
+  app.listen(port, () => {
+    console.log(`Server (standalone) listening on ${port}`);
+  });
+}
+
   // Note: Removed app.listen() because serverless environments (Vercel) do not allow manual port binding.
