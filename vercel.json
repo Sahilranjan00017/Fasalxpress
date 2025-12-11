@@ -6,18 +6,8 @@
   "devCommand": "pnpm dev",
   "rewrites": [
     {
-      "source": "/api/:path*",
-      "destination": "/api/:path*"
-    },
-    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
-  ],
-  "functions": {
-    "api/**/*.js": {
-      "memory": 1024,
-      "maxDuration": 10
-    }
-  }
+  ]
 }
