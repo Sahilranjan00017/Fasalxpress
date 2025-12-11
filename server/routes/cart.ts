@@ -1,5 +1,5 @@
 import express from "express";
-import { getCartWithItems, addToCart, updateCartItem, removeCartItem } from "../lib/db/cart";
+import { getCartWithItems, addToCart, updateCartItem, removeCartItem, mergeCarts } from "../lib/db/cart";
 import { normalizeCartResponse } from "../lib/normalizers";
 
 const router = express.Router();
