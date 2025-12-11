@@ -1,4 +1,7 @@
 {
+  "installCommand": "pnpm install",
+  "buildCommand": "pnpm run build",
+  "devCommand": "pnpm dev",
   "builds": [
     { "src": "package.json", "use": "@vercel/static-build", "config": { "distDir": "dist/spa" } },
     { "src": "api/index.ts", "use": "@vercel/node" }
