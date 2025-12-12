@@ -1,5 +1,9 @@
 import serverless from "serverless-http";
-import app from "./express";
+import { createServer } from "../server";
+
+// Instantiate the Express app directly (avoid relying on a separate compiled
+// `api/express` module which may not be present in the Vercel function bundle).
+const app = createServer();
 
 // Validate critical env vars on startup
 const requiredEnvVars = ["SUPABASE_URL", "SUPABASE_SERVICE_ROLE_KEY"];
