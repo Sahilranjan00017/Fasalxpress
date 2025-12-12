@@ -33,6 +33,19 @@ export function createServer() {
     res.json({ status: "ok", time: new Date().toISOString() });
   });
 
+  // Safe debug endpoint: reports presence of required env vars (no secret values)
+  app.get("/api/_env", (_req, res) => {
+    const keys = [
+      "SUPABASE_URL",
+      "SUPABASE_SERVICE_ROLE_KEY",
+      "VITE_SUPABASE_URL",
+      "VITE_SUPABASE_ANON_KEY",
+    ];
+    const result: Record<string, boolean> = {};
+    keys.forEach((k) => (result[k] = Boolean(process.env[k])));
+    res.json({ ok: true, env: result });
+  });
+
   app.get("/api/demo", handleDemo);
 
   // Simple DB test to validate Supabase connectivity

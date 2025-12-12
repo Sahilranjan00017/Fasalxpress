@@ -14,7 +14,26 @@ if (missingEnvVars.length > 0) {
   );
 }
 
-// Export a serverless handler that Vercel will call for /api/*
-const handler = serverless(app as any);
+// Initialize serverless handler with defensive fallback so initialization
+// errors are logged to Vercel function logs rather than causing opaque failures.
+let handler: any = null;
+let initError: any = null;
+try {
+  handler = serverless(app as any);
+} catch (err) {
+  initError = err;
+  console.error("Failed to initialize serverless handler:", err);
+}
 
-export default handler as any;
+// Export a function compatible with Vercel. If initialization failed,
+// return a clear 500 response and ensure the error appears in logs.
+export default async function vercelHandler(req: any, res: any) {
+  if (initError) {
+    console.error("API initialization error on request:", initError);
+    res.status(500).send("API initialization failed. Check function logs.");
+    return;
+  }
+
+  // Delegate to serverless handler
+  return handler(req, res);
+}
